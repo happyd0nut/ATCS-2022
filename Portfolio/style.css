@@ -1,3 +1,8 @@
+html, body {
+    width:100%;
+    height:100%;
+}
+
 /* ABOUT ME */
 .header {
     position:fixed; 
@@ -5,14 +10,17 @@
     left:0;
     height:80px;
     margin:10px;
+    z-index: 1;
 
     display:flex;
     align-items:center;
     justify-content: center;
+    
 
     /* outline */
-    border: 1.5px solid black; 
-    border-radius: 10px;
+    /* border: 1.5px solid black;  */
+    border-radius: 0px;
+    
 }
 
 .header a {
@@ -21,16 +29,34 @@
 }
 
 .header a:hover{
-    background-color: rgb(223, 234, 234);
-    border-radius: 10px;
+    background-color: rgb(223, 234, 234, 1);
+    border-radius: 8px;
 }
 
-.about_img {
-    margin:100px;
-    width: 400px;
-    position: sticky;
-    left:300px;
-    top:100px;
+.abt-img {
+    width:520px;
+    position: fixed;
+    top:130px;
+    left:450px;
+}
+
+.abt {
+    background-color: rgb(223, 234, 234, 0.8);
+    width:350px;
+    padding-left: 50px;
+    padding-bottom: 30px;
+    line-height: 0.75;
+    font-family: 'EB Garamond';
+    font-size: 1.2em;
+    position: fixed;
+    left:830px;
+    bottom:130px;
+    border-radius: 5px;
+}
+
+.abt h1 {
+    font-size: 3em;
+    /* font-family: 'EB Garamond'; */
 }
 
 /* links */
