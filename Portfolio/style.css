@@ -41,7 +41,7 @@ html, body {
 }
 
 .abt {
-    background-color: rgb(223, 234, 234, 0.8);
+    background-color: rgba(219, 228, 237, 0.8);
     width:350px;
     padding-left: 50px;
     padding-bottom: 30px;
@@ -54,9 +54,27 @@ html, body {
     border-radius: 5px;
 }
 
+.abt-blurb {
+    background-color: rgb(110, 188, 188,0.3);
+    width:700px;
+    padding:30px;
+    position:absolute;
+    top:400px;
+    left:465px;
+    text-align: center;
+    z-index: 10000;
+}
+
 .abt h1 {
     font-size: 3em;
     /* font-family: 'EB Garamond'; */
+}
+
+.abt-img2 {
+    width:500px;
+    position:fixed;
+    left:900px;
+    bottom:130px;
 }
 
 /* links */
