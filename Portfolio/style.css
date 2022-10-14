@@ -33,14 +33,14 @@ html, body {
     border-radius: 8px;
 }
 
-.abt-img {
+.home-img {
     width:520px;
     position: fixed;
     top:130px;
     left:450px;
 }
 
-.abt {
+.home {
     background-color: rgba(219, 228, 237, 0.8);
     width:350px;
     padding-left: 50px;
@@ -51,7 +51,6 @@ html, body {
     position: fixed;
     left:830px;
     bottom:130px;
-    border-radius: 5px;
 }
 
 .abt-blurb {
