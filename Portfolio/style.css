@@ -11,14 +11,10 @@ html, body {
     height:80px;
     margin:10px;
     z-index: 1;
-
+    background-color: rgba(255, 255, 255, 0.4);
     display:flex;
     align-items:center;
     justify-content: center;
-    
-
-    /* outline */
-    /* border: 1.5px solid black;  */
     border-radius: 0px;
     
 }
@@ -45,6 +41,7 @@ html, body {
     width:350px;
     padding-left: 50px;
     padding-bottom: 30px;
+    padding-top: 20px;
     line-height: 0.75;
     font-family: 'EB Garamond';
     font-size: 1.2em;
@@ -66,7 +63,6 @@ html, body {
 
 .abt h1 {
     font-size: 3em;
-    /* font-family: 'EB Garamond'; */
 }
 
 .abt-img2 {
@@ -74,6 +70,43 @@ html, body {
     position:fixed;
     left:900px;
     bottom:130px;
+}
+
+.main {
+    display:grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 200px 400px 400px 400px;
+
+}
+
+#line {
+    grid-column: 1;
+    display:flex;
+    justify-content: center;
+    position:fixed;
+    left:300px;
+    top:0px;
+    width:10px;
+    height:100vh;
+    background-color:rgb(0, 41, 41);
+}
+
+.col-2 {
+    grid-column:2;
+    grid-row:2;
+}
+
+.col-2 img {
+    width:400px;
+}
+
+.col-3 {
+    grid-column:3;
+    grid-row:2;
+}
+.col-3 p {
+    padding-top:80px;
+    padding-bottom:80px;
 }
 
 /* links */
