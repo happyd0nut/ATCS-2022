@@ -3,7 +3,9 @@ html, body {
     height:100%;
 }
 
-/* ABOUT ME */
+
+/* HEADER */
+
 .header {
     background-color: rgba(235, 235, 235, 0.4);
     display:flex;
@@ -15,7 +17,7 @@ html, body {
     left:0;
     height:80px;
     margin:10px;
-    z-index: 1000000000;
+    z-index: 100000;
 }
 
 .header a {
@@ -28,11 +30,12 @@ html, body {
     border-radius: 6px;
 }
 
+
+/* INDEX */
+
 .home {
-    /* background-color: rgba(235, 235, 235, 0.4); */
     width:350px;
     padding-left: 50px;
-    /*padding-top: 20px;*/
     padding-bottom: 30px; 
     line-height: 0.5;
     font-size: 1.3em;
@@ -52,6 +55,9 @@ html, body {
     font-size: 3.5em;
 }
 
+
+/* ABOUT */
+
 .abt-blurb {
     background-color: rgba(149, 191, 191, 0.3);
     width:500px;
@@ -60,7 +66,7 @@ html, body {
     top:300px;
     left:300px;
     text-align: center;
-    z-index: 10000;
+    z-index: 100;
 }
 
 .abt-img2 {
@@ -69,6 +75,8 @@ html, body {
     left:900px;
     bottom:130px;
 }
+
+/* EXPERIENCE */
 
 .main {
     display:grid;
@@ -93,7 +101,6 @@ html, body {
     grid-column:2;
     grid-row:2;
     display: flex;
-    
     flex-direction: column;
 }
 
@@ -115,9 +122,8 @@ html, body {
     top:300px;
     left:200px;
     width:400px;
-
-
 }
+
 .caption p {
     z-index: 1000;
     background-color: rgb(223, 234, 234);
@@ -148,6 +154,9 @@ html, body {
 #cap-5 {
     top:1800px;
 }
+
+
+/* CONTACT */
 
 .contact-main {
     display: grid;
@@ -183,6 +192,9 @@ html, body {
 .github {
     grid-column:3;
 }
+
+
+/* LINK FORMAT */
 
 a:link{
     color:black;
