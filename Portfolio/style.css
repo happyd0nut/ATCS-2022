@@ -5,18 +5,17 @@ html, body {
 
 /* ABOUT ME */
 .header {
+    background-color: rgba(235, 235, 235, 0.4);
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    border-radius: 0px;
     position:fixed; 
     right:0;
     left:0;
     height:80px;
     margin:10px;
-    z-index: 1;
-    background-color: rgba(255, 255, 255, 0.4);
-    display:flex;
-    align-items:center;
-    justify-content: center;
-    border-radius: 0px;
-    
+    z-index: 1000000000;
 }
 
 .header a {
@@ -25,29 +24,32 @@ html, body {
 }
 
 .header a:hover{
-    background-color: rgb(223, 234, 234, 1);
-    border-radius: 8px;
+    background-color: rgb(223, 234, 234, 0.8);
+    border-radius: 6px;
+}
+
+.home {
+    /* background-color: rgba(235, 235, 235, 0.4); */
+    width:350px;
+    padding-left: 50px;
+    /*padding-top: 20px;*/
+    padding-bottom: 30px; 
+    line-height: 0.5;
+    font-size: 1.3em;
+    position: fixed;
+    left:900px;
+    bottom:300px;
 }
 
 .home-img {
     width:520px;
     position: fixed;
-    top:130px;
-    left:450px;
+    top:150px;
+    left:350px;
 }
 
-.home {
-    background-color: rgba(219, 228, 237, 0.8);
-    width:350px;
-    padding-left: 50px;
-    padding-bottom: 30px;
-    padding-top: 20px;
-    line-height: 0.75;
-    font-family: 'EB Garamond';
-    font-size: 1.2em;
-    position: fixed;
-    left:830px;
-    bottom:130px;
+.home h1 {
+    font-size: 3.5em;
 }
 
 .abt-blurb {
@@ -61,9 +63,7 @@ html, body {
     z-index: 10000;
 }
 
-.abt h1 {
-    font-size: 3em;
-}
+
 
 .abt-img2 {
     width:500px;
@@ -74,42 +74,83 @@ html, body {
 
 .main {
     display:grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-template-rows: 200px 400px 400px 400px;
-
+    grid-template-columns: 500px 900px;
+    grid-template-rows: 200px 300px 400px 400px;
 }
 
 #line {
     grid-column: 1;
     display:flex;
     justify-content: center;
-    position:fixed;
+    position:relative;
     left:300px;
     top:0px;
     width:10px;
-    height:100vh;
-    background-color:rgb(0, 41, 41);
+    height:300vh;
+    background-color:rgb(232, 232, 232);
+    z-index: 0;
 }
 
-.col-2 {
+.photo {
     grid-column:2;
     grid-row:2;
+    display: flex;
+    
+    flex-direction: column;
 }
 
-.col-2 img {
-    width:400px;
+.photo img {
+    width: 600px;
+    align-self: center;
+    align-items: flex-end;
+    margin:10px;
 }
 
-.col-3 {
-    grid-column:3;
+.caption {
+    grid-column:1;
     grid-row:2;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    overflow-wrap: break-word;
+    position:relative;
+    top:300px;
+    left:200px;
+    width:400px;
+
+
 }
-.col-3 p {
-    padding-top:80px;
-    padding-bottom:80px;
+.caption p {
+    z-index: 1000;
+    background-color: rgb(223, 234, 234);
+    text-align: end;
+    margin-bottom:0px;
+    padding:20px;
+    position:relative;
 }
 
-/* links */
+#cap-2 {
+    top:630px;
+    background-color: rgb(232, 232, 232);
+    width:200px;
+    left:100px;
+}
+
+#cap-3 {
+    top:930px;
+    background-color: rgb(232, 232, 232);
+    width:200px;
+    left:100px;
+}
+
+#cap-4 {
+    top:1600px;
+}
+
+#cap-5 {
+    top:1800px;
+}
+
 
 a:link{
     color:black;
