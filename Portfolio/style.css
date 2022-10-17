@@ -53,17 +53,15 @@ html, body {
 }
 
 .abt-blurb {
-    background-color: rgb(110, 188, 188,0.3);
-    width:700px;
+    background-color: rgba(149, 191, 191, 0.3);
+    width:500px;
     padding:30px;
     position:absolute;
-    top:400px;
-    left:465px;
+    top:300px;
+    left:300px;
     text-align: center;
     z-index: 10000;
 }
-
-
 
 .abt-img2 {
     width:500px;
@@ -151,6 +149,40 @@ html, body {
     top:1800px;
 }
 
+.contact-main {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 140px 120px 200px;
+}
+
+.contact-main h2 {
+    grid-row:2;
+    grid-column:2;
+    text-align: center;
+
+}
+
+.contact-main div {
+    grid-row:3;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    background-color: rgb(232, 232, 232);
+}
+
+.phone {
+    grid-column:1;
+}
+
+.email {
+    grid-column:2;
+}
+
+.github {
+    grid-column:3;
+}
 
 a:link{
     color:black;
