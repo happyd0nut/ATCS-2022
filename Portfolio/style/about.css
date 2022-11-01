@@ -1,0 +1,20 @@
+
+/* ABOUT */
+
+.abt-blurb {
+    background-color: rgba(149, 191, 191, 0.3);
+    width:500px;
+    padding:30px;
+    position:absolute;
+    top:300px;
+    left:300px;
+    text-align: center;
+    z-index: 100;
+}
+
+.abt-img2 {
+    width:500px;
+    position:fixed;
+    left:900px;
+    bottom:130px;
+}
