@@ -1,0 +1,49 @@
+
+#line {
+    display:flex;
+    justify-content: center;
+    position:absolute;
+    left:15vw;
+    width:10px;
+    height:250vh;
+    background-color:rgb(232, 232, 232);
+    z-index: -1;
+}
+
+.list-arr {
+    margin-left:70vw;
+    margin-top:30px;
+    width:150px;
+    text-align: right;
+    position:sticky;
+    top:78px;
+    z-index:1000;
+}
+
+.list-arr a {
+    background-color: rgba(234, 234, 234, 0.3);
+    border:white;
+}
+
+.main img {
+    width:30vw;
+    max-width: 600px;
+    min-width: 400px;
+    align-self: center;
+    margin:10px;
+}
+
+.shift {
+    position: relative;
+    top:30px;
+}
+
+.button {
+    background-color: rgb(234, 234, 234);
+}
+
+@media (max-width: 800px) {
+    #list-example {
+      display: none;
+    }
+}

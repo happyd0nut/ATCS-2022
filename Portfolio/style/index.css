@@ -1,0 +1,28 @@
+
+.jumb-off {
+    position:relative;
+    top:30px;
+}
+
+.home {
+    max-height: 200px;
+    position: relative;
+}
+
+.home-img {
+    width:30vw;
+    max-height:680px;
+    max-width:510px;
+    min-width: 350px;
+    
+}
+
+.home h1 {
+    font-size: 3.5em;
+}
+
+.button {
+    background-color: rgb(164, 185, 201);
+}
+
+

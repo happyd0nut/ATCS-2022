@@ -1,0 +1,28 @@
+
+.abt-blurb {
+    min-width:400px;
+    z-index: 100;
+}
+
+.abt-img2 {
+    width:500px;
+
+}
+
+.btn-col {
+    color:rgb(119, 119, 119);
+}
+
+.top {
+    position: relative;
+    top:50px;
+}
+
+.card-style {
+    max-width:1000px;
+}
+
+h3 {
+    padding-top: 40px;
+    text-align: center;
+}

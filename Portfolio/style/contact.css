@@ -1,0 +1,30 @@
+
+h2 {
+    padding: 50px;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+h4 {
+    padding:20px;
+    text-align: center;
+}
+
+.card-group {
+    text-align: center;
+}
+
+.card-title {
+    font-size:1.5em
+}
+
+.card-body{
+    background-color: rgb(243, 243, 243);
+}
+
+.format {
+    max-width: 1000px;
+    width:60vw;
+}
+
+
