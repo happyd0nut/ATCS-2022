@@ -57,7 +57,7 @@ class Tweet(Base):
     id = Column("id", INTEGER, primary_key=True)
     content = Column("content", TEXT, nullable=False)
     timestamp = Column("timestamp", INTEGER, nullable=False)
-    username = Column("username", TEXT, ForeignKey("user.username"))
+    username = Column("username", TEXT, ForeignKey("users.username"))
     user = relationship("User", back_populates="tweets")
     tags = relationship("Tag", secondary="tweet_tags", back_populates="tweets")
 
