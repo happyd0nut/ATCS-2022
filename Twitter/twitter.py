@@ -77,13 +77,12 @@ class Twitter:
             username = input("Username: ")
             password = input("Password: ")
 
+            valid = False
             userBook = db_session.query(User)
             for user in userBook:
                 if user.username == username:
                     valid = True
                     break
-                else:
-                    valid = False
             if valid:
                 login_user = db_session.query(User).where(User.username == username)
                 if(login_user[0].password == password):
@@ -153,7 +152,39 @@ class Twitter:
         
 
     def tweet(self):
-        pass
+        content = input("Tweet Content: \n")
+        cont_tags = input("Tags (tag separated with spaces):")
+
+        db_session.add(Tweet(content, datetime.now(), self.current_user))
+        db_session.commit()
+        tweet_id = db_session.query(Tweet).where(Tweet.content == content)
+
+        tagsList = cont_tags.split()
+        # works until here
+        # able to create tweet and store tweet_id
+        # able to create a list of tags from tweet
+
+        tagBook = db_session.query(Tag).all()
+        print(tagBook)
+        
+        for tag in tagsList:
+            if tag in tagBook: # if tag already exists
+                print("yay!!!")
+                tag_id = db_session.query(Tag).where(Tag.content == tag)[0].id
+                db_session.add(TweetTag(tweet_id, tag_id))
+                db_session.commit()
+            else:
+                print("new!!!")
+                db_session.add(Tag(tag)) # create new tag
+                db_session.commit() # do i need to commit each time or does flush work too?
+                tag_id = db_session.query(Tag).where(Tag.content == tag)[0].id
+                db_session.add(TweetTag(tweet_id, tag_id))
+                db_session.commit()
+        #         
+        #     else:
+        #         db_session.add(Tag(tag)) # create new tag
+        #         db_session.commit() # do i need to commit each time or does flush work too?
+        #         
     
     def view_my_tweets(self):
         pass
