@@ -75,28 +75,18 @@ class Twitter:
     def login(self): # Works
         while True:
             username = input("Username: ")
-            password = input("Password: ")
-
-            valid = False
-            userBook = db_session.query(User)
-            for user in userBook:
-                if user.username == username:
-                    valid = True
-                    break
-            if valid:
-                login_user = db_session.query(User).where(User.username == username)
-                if(login_user[0].password == password):
-                    self.current_user = username
-                    self.logged_in = True
-                    print("Welcome " + self.current_user + "!")
-                    break
-                else:
-                    print("Invalid username or password \n")
-            else:
-                print("Invalid username or password \n")
+            password = input ("Password: ")
+            user = db_session.query(User).where((User.username == username) & (User.password == password)). first()
+            if user is not None:
+                print("Welcome " + username + "!")
+                self.current_user = user
+                self. logged_in = True
+                break
+            print("Invalid username or password \n")
     
     def logout(self): # Works
         self.logged_in = False
+        self.current_user = None
         print("You successfully logged out")
         self.startup()
 
@@ -153,39 +143,37 @@ class Twitter:
 
     def tweet(self):
         content = input("Tweet Content: \n")
-        cont_tags = input("Tags (tag separated with spaces):")
+        cont_tags = input("Tags (separated with spaces): \n")
 
         db_session.add(Tweet(content, datetime.now(), self.current_user))
         db_session.commit()
-        tweet_id = db_session.query(Tweet).where(Tweet.content == content)
+        tweet_id = db_session.query(Tweet).where(Tweet.content == content)[0].id
 
         tagsList = cont_tags.split()
-        # works until here
-        # able to create tweet and store tweet_id
-        # able to create a list of tags from tweet
-
         tagBook = db_session.query(Tag).all()
-        print(tagBook)
         
         for tag in tagsList:
-            if tag in tagBook: # if tag already exists
-                print("yay!!!")
+            exists = False
+            for i in tagBook:
+                if i.content == tag:  
+                    exists = True
+            if exists: # if tag already exists
                 tag_id = db_session.query(Tag).where(Tag.content == tag)[0].id
-                # db_session.add(TweetTag(tweet_id, tag_id))
-                # db_session.commit()
-            else:
-                print("new!!!")
-                db_session.add(Tag(tag)) # create new tag
-                db_session.commit() # do i need to commit each time or does flush work too?
-                tag_id = db_session.query(Tag).where(Tag.content == tag)[0].id
-                print(tag_id)
                 db_session.add(TweetTag(tweet_id, tag_id))
                 db_session.commit()
-                print("committed!")
-          
+                tagBook = db_session.query(Tag).all()       
+            else: # create new tag
+                db_session.add(Tag(tag)) 
+                db_session.commit() # TODO: do i need to commit each time or does flush work too?
+                tag_id = db_session.query(Tag).where(Tag.content == tag)[0].id
+                db_session.add(TweetTag(tweet_id, tag_id))
+                db_session.commit()
+                tagBook = db_session.query(Tag).all()     
+                
     
     def view_my_tweets(self):
-        pass
+        my_tweets = db_session.query(Tweet).where(Tweet.user == self.current_user)
+        self.print_tweets(my_tweets)
     
     """
     Prints the 5 most recent tweets of the 
@@ -209,8 +197,7 @@ class Twitter:
 
         print("Welcome to ATCS Twitter!")
         self.startup()
-        tagBook = db_session.query(Tag).all()
-        print(tagBook)
+
         while self.logged_in:
             self.print_menu()
             print()
