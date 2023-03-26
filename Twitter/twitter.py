@@ -171,20 +171,18 @@ class Twitter:
             if tag in tagBook: # if tag already exists
                 print("yay!!!")
                 tag_id = db_session.query(Tag).where(Tag.content == tag)[0].id
-                db_session.add(TweetTag(tweet_id, tag_id))
-                db_session.commit()
+                # db_session.add(TweetTag(tweet_id, tag_id))
+                # db_session.commit()
             else:
                 print("new!!!")
                 db_session.add(Tag(tag)) # create new tag
                 db_session.commit() # do i need to commit each time or does flush work too?
                 tag_id = db_session.query(Tag).where(Tag.content == tag)[0].id
+                print(tag_id)
                 db_session.add(TweetTag(tweet_id, tag_id))
                 db_session.commit()
-        #         
-        #     else:
-        #         db_session.add(Tag(tag)) # create new tag
-        #         db_session.commit() # do i need to commit each time or does flush work too?
-        #         
+                print("committed!")
+          
     
     def view_my_tweets(self):
         pass
@@ -211,9 +209,11 @@ class Twitter:
 
         print("Welcome to ATCS Twitter!")
         self.startup()
-
+        tagBook = db_session.query(Tag).all()
+        print(tagBook)
         while self.logged_in:
             self.print_menu()
+            print()
             option = int(input(""))
 
             if option == 1:
