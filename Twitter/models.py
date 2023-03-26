@@ -96,10 +96,11 @@ class TweetTag(Base):
 
     # Columns
     id = Column("id", TEXT, primary_key=True)
-    tweet_id = Column("tweet_id", INTEGER, ForeignKey("tweet.id"))
-    tag_id = Column("tag_id", INTEGER, ForeignKey("tag.id"))
+    tweet_id = Column("tweet_id", INTEGER, ForeignKey("tweets.id"))
+    tag_id = Column("tag_id", INTEGER, ForeignKey("tags.id"))
 
     def __init__(self, tweet_id, tag_id):
         self.tweet_id = tweet_id
         self.tag_id = tag_id
+
 
