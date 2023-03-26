@@ -84,7 +84,7 @@ class Tag(Base):
     content = Column("content", TEXT, nullable=False)
     tweets = relationship("Tweet", secondary="tweet_tags", back_populates="tags")
 
-    def __init__(self, content) -> None:
+    def __init__(self, content):
         self.content = content
     
     def __repr__(self):
