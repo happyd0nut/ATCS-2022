@@ -50,7 +50,6 @@ class Follower(Base):
 
 
 class Tweet(Base):
-    # TODO: Complete the class
     __tablename__ = "tweets"
 
     # Columns
@@ -66,17 +65,14 @@ class Tweet(Base):
         self.timestamp = timestamp
         self.username = username
 
-
     def __repr__(self):
         tweet = repr(self.user) + "\n" + self.content + "\n"
         for tag in self.tags:
             tweet = tweet + repr(tag)
         return tweet + "\n" + self.timestamp
 
-    
 
 class Tag(Base):
-    # TODO: Complete the class
     __tablename__ = "tags"
 
     # Columns
@@ -92,7 +88,6 @@ class Tag(Base):
 
 
 class TweetTag(Base):
-    # TODO: Complete the class
     __tablename__ = "tweet_tags"
 
     # Columns
@@ -103,5 +98,3 @@ class TweetTag(Base):
     def __init__(self, tweet_id, tag_id):
         self.tweet_id = tweet_id
         self.tag_id = tag_id
-
-

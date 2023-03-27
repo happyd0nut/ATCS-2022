@@ -130,12 +130,10 @@ class Twitter:
         followList = db_session.query(Follower).where(Follower.follower_id == self.current_user)
         unfollowed = False
         for follower in followList:
-            print("I follow this person")
             if follower.following_id == unfollow:
                 db_session.delete(follower)
                 db_session.commit()
                 unfollowed = True
-                print("I unfollowed")
                 break
         if not unfollowed:
             print("You don't follow" + unfollow)
@@ -152,7 +150,7 @@ class Twitter:
         tagsList = cont_tags.split()
         tagBook = db_session.query(Tag).all()
         
-        for tag in tagsList:
+        for tag in tagsList: # could condense code here: line
             exists = False
             for i in tagBook:
                 if i.content == tag:  
@@ -171,7 +169,7 @@ class Twitter:
                 tagBook = db_session.query(Tag).all()     
                 
     
-    def view_my_tweets(self):
+    def view_my_tweets(self): # could strip tags of leading spaces or \ns
         my_tweets = db_session.query(Tweet).where(Tweet.user == self.current_user)
         self.print_tweets(my_tweets)
     
@@ -180,7 +178,13 @@ class Twitter:
     people the user follows
     """
     def view_feed(self):
-        pass
+        following = db_session.query(Follower)
+        #.where(Follower.follower_id == self.current_user)
+        for i in following:
+            print(i.following_id)
+      #  recent_tweets = db_session.query(Tweet).where(Tweet.user in following)
+        # .order_by(Tweet.timestamp.desc()).limit(5)
+       # print(recent_tweets)
 
     def search_by_user(self):
         pass
