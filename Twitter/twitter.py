@@ -63,9 +63,9 @@ class Twitter:
             else:
                 db_session.add(User(handle, password))
                 db_session.commit()
-                self.current_user = handle
+                self.current_user = db_session.query(User).where(User.username == handle).first()
                 self.logged_in = True
-                print("Welcome " + self.current_user + "!")
+                print("Welcome " + self.current_user.username + "!")
                 break
 
     """
@@ -76,7 +76,7 @@ class Twitter:
         while True:
             username = input("Username: ")
             password = input ("Password: ")
-            user = db_session.query(User).where((User.username == username) & (User.password == password)). first()
+            user = db_session.query(User).where((User.username == username) & (User.password == password)).first()
             if user is not None:
                 print("Welcome " + username + "!")
                 self.current_user = user
@@ -109,67 +109,58 @@ class Twitter:
             else:
                 print("Enter a valid selection:")
 
-    def follow(self): # can follow only valid users? 
+    def follow(self): 
+        toFollow = input("Who would you like to follow? \n") 
 
-        toFollow = input("Who would you like to follow? \n")
-        followList = db_session.query(Follower).where(Follower.follower_id == self.current_user)
-        follow_yet = False
-        for follower in followList:
-            if follower.following_id == toFollow:
-                print("You already follow " + toFollow)
-                follow_yet = True
-                break
-        if  not follow_yet:
-            db_session.add(Follower(self.current_user, toFollow))
+        userFollow = db_session.query(User).where(User.username == toFollow).first() 
+        if userFollow in self.current_user.following: # comparing objects
+            print("You already follow " + toFollow)
+        else:
+            db_session.add(Follower(self.current_user.username, toFollow))
             db_session.commit()
-            print("You are now following " + toFollow)
+            print("You are now following @" + toFollow)
 
-
-    def unfollow(self): # works
+    def unfollow(self): 
         unfollow = input("Who would you like to unfollow? \n")
-        followList = db_session.query(Follower).where(Follower.follower_id == self.current_user)
-        unfollowed = False
-        for follower in followList:
-            if follower.following_id == unfollow:
-                db_session.delete(follower)
-                db_session.commit()
-                unfollowed = True
-                break
-        if not unfollowed:
-            print("You don't follow" + unfollow)
-        
 
-    def tweet(self):
+        userUnfollow = db_session.query(User).where(User.username == unfollow).first()
+        if userUnfollow in self.current_user.following:
+            db_session.delete(userUnfollow)
+            db_session.commit()
+            print("You have unfollowed @" + unfollow)
+        else:
+            print("You don't follow" + unfollow)
+
+    def tweet(self): 
         content = input("Tweet Content: \n")
         cont_tags = input("Tags (separated with spaces): \n")
 
-        db_session.add(Tweet(content, datetime.now(), self.current_user))
+        tweet = Tweet(content, datetime.now(), self.current_user.username)
+        db_session.add(tweet)
         db_session.commit()
-        tweet_id = db_session.query(Tweet).where(Tweet.content == content)[0].id
 
-        tagsList = cont_tags.split()
+        postTags = cont_tags.split() 
         tagBook = db_session.query(Tag).all()
-        
-        for tag in tagsList: # could condense code here: line
+        for tag in postTags:      
             exists = False
             for i in tagBook:
                 if i.content == tag:  
                     exists = True
+                    tag_id = i.id 
+                    
             if exists: # if tag already exists
-                tag_id = db_session.query(Tag).where(Tag.content == tag)[0].id
-                db_session.add(TweetTag(tweet_id, tag_id))
+                db_session.add(TweetTag(tweet.id, tag_id))
                 db_session.commit()
-                tagBook = db_session.query(Tag).all()       
+                tagBook = db_session.query(Tag).all()  
+
             else: # create new tag
-                db_session.add(Tag(tag)) 
-                db_session.commit() # TODO: do i need to commit each time or does flush work too?
-                tag_id = db_session.query(Tag).where(Tag.content == tag)[0].id
-                db_session.add(TweetTag(tweet_id, tag_id))
+                newTag = Tag(tag)
+                db_session.add(newTag) 
                 db_session.commit()
-                tagBook = db_session.query(Tag).all()     
-                
+                db_session.add(TweetTag(tweet.id, newTag.id))
+                db_session.commit()   
     
-    def view_my_tweets(self): # could strip tags of leading spaces or \ns
+    def view_my_tweets(self): 
         my_tweets = db_session.query(Tweet).where(Tweet.user == self.current_user)
         self.print_tweets(my_tweets)
     
@@ -178,19 +169,28 @@ class Twitter:
     people the user follows
     """
     def view_feed(self):
-        following = db_session.query(Follower)
-        #.where(Follower.follower_id == self.current_user)
-        for i in following:
-            print(i.following_id)
-      #  recent_tweets = db_session.query(Tweet).where(Tweet.user in following)
-        # .order_by(Tweet.timestamp.desc()).limit(5)
-       # print(recent_tweets)
+
+        followingList = [user.username for user in self.current_user.following]
+        feed = db_session.query(Tweet).where(Tweet.username.in_(followingList)).order_by(Tweet.timestamp.desc()).limit(5)
+        self.print_tweets(feed)
 
     def search_by_user(self):
-        pass
+        
+        searchUser = input("Search for user: ")
+        user = db_session.query(User).where(User.username == searchUser).first()
+        if user is None:
+            print("There is no user by that name")
+        else:
+            self.print_tweets(user.tweets)
 
     def search_by_tag(self):
-        pass
+
+        searchTag = input("Search for tag: ")
+        tag = db_session.query(Tag).where(Tag.content == searchTag).first()
+        if tag is None:
+            print("There are no tweets with that tag")
+        else:
+            self.print_tweets(tag.tweets)
 
     """
     Allows the user to select from the 
@@ -198,15 +198,14 @@ class Twitter:
     """
     def run(self):
         init_db()
-
         print("Welcome to ATCS Twitter!")
         self.startup()
 
         while self.logged_in:
             self.print_menu()
             print()
-            option = int(input(""))
 
+            option = int(input(""))
             if option == 1:
                 self.view_feed()
             elif option == 2:
@@ -222,6 +221,5 @@ class Twitter:
             elif option == 7:
                 self.unfollow()
             else:
-                self.logout()
-        
+                self.logout() 
         self.end()

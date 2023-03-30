@@ -68,7 +68,7 @@ class Tweet(Base):
     def __repr__(self):
         tweet = repr(self.user) + "\n" + self.content + "\n"
         for tag in self.tags:
-            tweet = tweet + repr(tag)
+            tweet = tweet + repr(tag) + " "
         return tweet + "\n" + self.timestamp
 
 
@@ -84,7 +84,7 @@ class Tag(Base):
         self.content = content
     
     def __repr__(self):
-        return "#" + self.content
+        return "#" + self.content 
 
 
 class TweetTag(Base):
