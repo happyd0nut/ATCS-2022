@@ -12,7 +12,7 @@ class Twitter:
     The menu to print once a user has logged in
     """
 
-    def print_menu(self): # Works
+    def print_menu(self): 
         print("\nPlease select a menu option:")
         print("1. View Feed")
         print("2. View My Tweets")
@@ -35,7 +35,7 @@ class Twitter:
     """
     Should be run at the end of the program
     """
-    def end(self): # Works
+    def end(self): 
         print("Thanks for visiting!")
         db_session.remove()
     
@@ -43,7 +43,7 @@ class Twitter:
     Registers a new user. The user
     is guaranteed to be logged in after this function.
     """
-    def register_user(self): # Works
+    def register_user(self): 
         
         while True:
             handle = input("What will your handle be? \n")
@@ -61,9 +61,11 @@ class Twitter:
             elif password != re_password:
                 print("Those passwords don't match. Try again. \n")
             else:
-                db_session.add(User(handle, password))
+                newUser = User(handle, password)
+                db_session.add(newUser)
                 db_session.commit()
-                self.current_user = db_session.query(User).where(User.username == handle).first()
+
+                self.current_user = newUser
                 self.logged_in = True
                 print("Welcome " + self.current_user.username + "!")
                 break
@@ -111,9 +113,8 @@ class Twitter:
 
     def follow(self): 
         toFollow = input("Who would you like to follow? \n") 
-
         userFollow = db_session.query(User).where(User.username == toFollow).first() 
-        if userFollow in self.current_user.following: # comparing objects
+        if userFollow in self.current_user.following: 
             print("You already follow " + toFollow)
         else:
             db_session.add(Follower(self.current_user.username, toFollow))
@@ -122,7 +123,6 @@ class Twitter:
 
     def unfollow(self): 
         unfollow = input("Who would you like to unfollow? \n")
-
         userUnfollow = db_session.query(User).where(User.username == unfollow).first()
         if userUnfollow in self.current_user.following:
             db_session.delete(userUnfollow)
@@ -134,7 +134,6 @@ class Twitter:
     def tweet(self): 
         content = input("Tweet Content: \n")
         cont_tags = input("Tags (separated with spaces): \n")
-
         tweet = Tweet(content, datetime.now(), self.current_user.username)
         db_session.add(tweet)
         db_session.commit()
@@ -147,12 +146,10 @@ class Twitter:
                 if i.content == tag:  
                     exists = True
                     tag_id = i.id 
-                    
             if exists: # if tag already exists
                 db_session.add(TweetTag(tweet.id, tag_id))
                 db_session.commit()
                 tagBook = db_session.query(Tag).all()  
-
             else: # create new tag
                 newTag = Tag(tag)
                 db_session.add(newTag) 
@@ -169,13 +166,11 @@ class Twitter:
     people the user follows
     """
     def view_feed(self):
-
         followingList = [user.username for user in self.current_user.following]
         feed = db_session.query(Tweet).where(Tweet.username.in_(followingList)).order_by(Tweet.timestamp.desc()).limit(5)
         self.print_tweets(feed)
 
     def search_by_user(self):
-        
         searchUser = input("Search for user: ")
         user = db_session.query(User).where(User.username == searchUser).first()
         if user is None:
@@ -184,7 +179,6 @@ class Twitter:
             self.print_tweets(user.tweets)
 
     def search_by_tag(self):
-
         searchTag = input("Search for tag: ")
         tag = db_session.query(Tag).where(Tag.content == searchTag).first()
         if tag is None:
@@ -204,7 +198,6 @@ class Twitter:
         while self.logged_in:
             self.print_menu()
             print()
-
             option = int(input(""))
             if option == 1:
                 self.view_feed()
